@@ -1,0 +1,34 @@
+table,
+th,
+td {
+  border: 1px solid black;
+  text-align: center;
+}
+
+table {
+  width: 100%;
+}
+
+th {
+  font-weight: bold;
+  font-size: 14px;
+  color: #000;
+  text-align: center;
+  background-color: #9d9de9;
+  color: #fff;
+}
+
+.route-user {
+  float: right;
+  font-size: 16px;
+  color: #729fcf;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.message {
+  color: #096;
+  font-size: 14px;
+  margin-left: 10px;
+  font-weight: bold;
+}

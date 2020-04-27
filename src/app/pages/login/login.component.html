@@ -1,0 +1,21 @@
+<div class="login-form">
+  <h3 class="login-header">Twitter Hashtag Dashboard</h3>
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <p>
+      <mat-form-field>
+        <input type="text" matInput placeholder="Username" formControlName="username">
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field>
+        <input type="password" matInput placeholder="Password" formControlName="password">
+      </mat-form-field>
+    </p>
+    <p *ngIf="error_message" class="error">
+      {{ error_message }}
+    </p>
+    <p class="button">
+      <button type="submit" mat-raised-button type="submit" class="button" [disabled]="!loginForm.valid">Login</button>
+    </p>
+  </form>
+</div>

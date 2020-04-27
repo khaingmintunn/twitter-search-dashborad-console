@@ -1,0 +1,28 @@
+table,
+th,
+td {
+  border: 1px solid black;
+  text-align: center;
+}
+
+table {
+  width: 100%;
+}
+
+th {
+  font-weight: bold;
+  font-size: 14px;
+  color: #000;
+  text-align: center;
+  background-color: #9d9de9;
+  color: #fff;
+}
+
+.back-link {
+  float: left;
+  font-size: 16px;
+  color: #729fcf;
+  margin: 10px 0px;
+  margin-left: 25px;
+  cursor: pointer;
+}

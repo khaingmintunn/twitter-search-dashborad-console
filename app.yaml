@@ -1,0 +1,33 @@
+# version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+
+handlers:
+- url: /favicon\.ico
+  static_files: dist/my-test-ng/favicon.ico
+  upload: dist/my-test-ng/favicon\.ico
+
+- url: /(.*\.(gif|png|jpeg|jpg|svg|css|js|ico|woff|woff2|map|ttf|otf))$
+  static_files: dist/my-test-ng/\1
+  upload: dist/my-test-ng/(.*)
+
+- url: /(.*)
+  static_files: dist/my-test-ng/index.html
+  upload: dist/my-test-ng/index.html
+
+
+skip_files:
+- src/
+- node_modules/
+- e2e/
+- ^(.*/)?#.*#$
+- ^(.*/)?.*~$
+- ^(.*/)?.*\.py[co]$
+- ^(.*/)?.*/RCS/.*$
+- ^(.*/)?\..*$
+
+libraries:
+- name: ssl
+  version: latest
