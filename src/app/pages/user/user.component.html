@@ -4,54 +4,58 @@
     <h2 style = "text-align:center">
       Tweet List
     </h2>
+    <!-- <mat-paginator #paginator [pageSize]="pageSize" [pageSizeOptions]="[10, 20, 50, 100]" [showFirstLastButtons]="true"
+      [length]="totalSize" [pageIndex]="currentPage" (page)="handlePage($event)"
+      >
+    </mat-paginator> -->
 
     <!-- user list data -->
-    <table mat-table [dataSource]="dataSource" matSort class="tweet-list-table">
+    <table mat-table [dataSource]="dataSource" (matSortChange)="sortDataByMatHeader($event)" matSort class="tweet-list-table">
       <!-- keyword Column -->
       <ng-container matColumnDef="keyword">
-        <th mat-header-cell *matHeaderCellDef> Keyword </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Keyword </th>
         <td mat-cell *matCellDef="let element" class="tweet-data"> {{element.keyword}} </td>
       </ng-container>
       <!-- keyword Column -->
 
       <!-- tweetId Column -->
       <ng-container matColumnDef="tweetId">
-        <th mat-header-cell *matHeaderCellDef> Twitter Id </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Twitter Id </th>
         <td mat-cell *matCellDef="let element" class="tweet-data"> {{element.tweet_id_str}} </td>
       </ng-container>
       <!-- tweetId Column -->
 
       <!-- userName Column -->
       <ng-container matColumnDef="userName">
-        <th mat-header-cell *matHeaderCellDef> User Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> User Name </th>
         <td mat-cell *matCellDef="let element" class="tweet-data"> {{element.user_name}} </td>
       </ng-container>
       <!-- userName Column -->
 
       <!-- userScreenName Column -->
       <ng-container matColumnDef="userScreenName">
-        <th mat-header-cell *matHeaderCellDef> User Screen Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> User Screen Name </th>
         <td mat-cell *matCellDef="let element" class="tweet-data"> {{element.user_screen_name}} </td>
       </ng-container>
       <!-- userScreenName Column -->
 
       <!-- originalText Column -->
       <ng-container matColumnDef="originalText">
-        <th mat-header-cell *matHeaderCellDef> Original Text </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Original Text </th>
         <td mat-cell *matCellDef="let element" class="tweet-data"> {{element.original_text}} </td>
       </ng-container>
       <!-- originalText Column -->
 
       <!-- followerCount Column -->
       <ng-container matColumnDef="followerCount">
-        <th mat-header-cell *matHeaderCellDef> Followers Count </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Followers Count </th>
         <td mat-cell *matCellDef="let element" class="tweet-data"> {{element.followers_count}} </td>
       </ng-container>
       <!-- followerCount Column -->
 
       <!-- createdAt Column -->
       <ng-container matColumnDef="createdAt">
-        <th mat-header-cell *matHeaderCellDef> Created At </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Created At </th>
         <td mat-cell *matCellDef="let element" class="tweet-data"> {{element.tweet_created_at}} </td>
       </ng-container>
       <!-- createdAt Column -->

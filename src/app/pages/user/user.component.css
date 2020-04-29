@@ -26,3 +26,10 @@ th {
   margin-left: 25px;
   cursor: pointer;
 }
+
+.fixed-mat-paginator {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}

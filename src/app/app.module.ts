@@ -7,11 +7,12 @@ import { HomeComponent } from './pages/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './pages/login/login.component';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
-import { MatDialog } from '@angular/material';
+import { MatPaginatorIntl } from '@angular/material';
 import { AngularMaterialImportsModule } from './angular-material-imports.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserComponent } from './pages/user/user.component'
+import { CustomPaginator } from '../app/paginator/custom-paginator'
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { UserComponent } from './pages/user/user.component'
     NgbModule
   ],
   providers: [
-    { provide: MatDialog, useValue: {} }
+    { provide: MatPaginatorIntl, useValue: CustomPaginator() }
   ],
   bootstrap: [AppComponent]
 })
