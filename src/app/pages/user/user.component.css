@@ -1,6 +1,4 @@
-table,
-th,
-td {
+table, th, td {
   border: 1px solid black;
   text-align: center;
 }
@@ -32,4 +30,12 @@ th {
   left: 0;
   bottom: 0;
   width: 100%;
+}
+
+.filter-container {
+  margin-left: 25px;
+}
+
+.filter-field {
+  margin-right: 5px;
 }

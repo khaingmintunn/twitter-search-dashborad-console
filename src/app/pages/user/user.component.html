@@ -4,6 +4,57 @@
     <h2 style = "text-align:center">
       Tweet List
     </h2>
+    <!-- filters form-->
+    <div class="filter-container">
+      <mat-hint class="filter-title">Filters</mat-hint>
+      <form [formGroup]="filterForm" class="filter-form">
+        <!-- keyword filter -->
+        <mat-form-field class="filter-field">
+          <input matInput placeholder="keyword" formControlName="keyword">
+        </mat-form-field>
+        <!-- keyword filter -->
+
+        <!-- tweetId filter -->
+        <mat-form-field class="filter-field">
+          <input matInput placeholder="tweetId" formControlName="tweetId">
+        </mat-form-field>
+        <!-- tweetId filter -->
+
+        <!-- userName filter -->
+        <mat-form-field class="filter-field">
+          <input matInput placeholder="userName" formControlName="userName">
+        </mat-form-field>
+        <!-- userName filter -->
+
+        <!-- userScreenName filter -->
+        <mat-form-field class="filter-field">
+          <input matInput placeholder="userScreenName" formControlName="userScreenName">
+        </mat-form-field>
+        <!-- userScreenName filter -->
+
+        <!-- originalText filter -->
+        <mat-form-field class="filter-field">
+          <input matInput placeholder="originalText" formControlName="originalText">
+        </mat-form-field>
+        <!-- originalText filter -->
+
+        <!-- followerCount filter -->
+        <mat-form-field class="filter-field">
+          <input matInput [type]="'number'" min="0" placeholder="followerCount" formControlName="followerCount">
+        </mat-form-field>
+        <!-- followerCount filter -->
+
+        <!-- createdAt filter -->
+        <mat-form-field class="filter-field">
+          <input matInput [matDatepicker]="picker" placeholder="createdAt" formControlName="createdAt">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <!-- createdAt filter -->
+      </form>
+    </div>
+    <!-- filters form -->
+
     <!-- <mat-paginator #paginator [pageSize]="pageSize" [pageSizeOptions]="[10, 20, 50, 100]" [showFirstLastButtons]="true"
       [length]="totalSize" [pageIndex]="currentPage" (page)="handlePage($event)"
       >

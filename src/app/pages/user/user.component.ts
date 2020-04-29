@@ -3,6 +3,8 @@ import { DashboardService } from '../../service/dashboard.service';
 import { MatTableDataSource } from '@angular/material';
 import { Sort } from '@angular/material/sort';
 import { DatePipe } from '@angular/common';
+import { FormGroup, FormControl } from '@angular/forms';
+import { debounceTime } from 'rxjs/operators';
 declare var require: any;
 
 @Component({
@@ -17,8 +19,24 @@ export class UserComponent implements OnInit {
   users = []
   sortDirection = '';
   sortActive = '';
+  inputChangeStatus = false;
+  currentPage = 0;
+  showGeneratedText = [];
+  tempEditGeneratedText;
+  retData: any;
+  filteredResult: []
   public dataSource = new MatTableDataSource<Element>();
   displayedColumns: string[] = ['keyword', 'tweetId', 'userName', 'userScreenName', 'originalText', 'followerCount', 'createdAt'];
+
+  filterForm = new FormGroup({
+    keyword: new FormControl(''),
+    tweetId: new FormControl(''),
+    userName: new FormControl(''),
+    userScreenName: new FormControl(''),
+    originalText: new FormControl(''),
+    followerCount: new FormControl(''),
+    createdAt: new FormControl(''),
+  });
   constructor(
     private dashboardservice: DashboardService,
     private datePipe: DatePipe,
@@ -26,6 +44,7 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUsers()
+    this.getValueByChangeFormControl()
   }
 
   public sortDataByMatHeader(sort: Sort) {
@@ -71,10 +90,117 @@ export class UserComponent implements OnInit {
     return false;
   }
 
+  getValueByChangeFormControl() {
+    this.filterForm.valueChanges
+      .pipe(debounceTime(1000))
+      .subscribe(() => {
+        if (this.inputChangeStatus === true) {
+          this.inputChangeStatus = false;
+        } else {
+
+        }
+        this.currentPage = 0;
+        const i = this.showGeneratedText.indexOf(false);
+        if (i >= 0) {
+          this.showGeneratedText[i] = true;
+          this.dataSource.data[i]['generated_text'] = this.tempEditGeneratedText;
+        }
+        setTimeout(() => {
+          this.retData = this.users
+          this.applyFilter();
+        }, 500);
+      })
+    this.filterForm.get('keyword').valueChanges.subscribe(x => {
+      this.inputChangeStatus = true;
+    });
+  }
+
+  applyFilter() {
+    let temp = this.retData;
+    if (!this.checkNullOrEmpty(this.filterForm.value.keyword)) {
+      temp = this.filterDataByValue('keyword', this.filterForm.value.keyword, temp);
+    }
+
+    if (!this.checkNullOrEmpty(this.filterForm.value.tweetId)) {
+      temp = this.filterDataByValue('tweetId', this.filterForm.value.tweetId, temp);
+    }
+
+    if (!this.checkNullOrEmpty(this.filterForm.value.userName)) {
+      temp = this.filterDataByValue('userName', this.filterForm.value.userName, temp);
+    }
+
+    if (!this.checkNullOrEmpty(this.filterForm.value.userScreenName)) {
+      temp = this.filterDataByValue('userScreenName', this.filterForm.value.userScreenName, temp);
+    }
+
+    if (!this.checkNullOrEmpty(this.filterForm.value.originalText)) {
+      temp = this.filterDataByValue('originalText', this.filterForm.value.originalText, temp);
+    }
+
+    if (!this.checkNullOrEmpty(this.filterForm.value.followerCount)) {
+      temp = this.filterDataByValue('followerCount', this.filterForm.value.followerCount, temp);
+    }
+
+    if (!this.checkNullOrEmpty(this.filterForm.value.createdAt)) {
+      temp = this.filterDataByValue('createdAt', this.filterForm.value.createdAt, temp);
+    }
+    this.filteredResult = temp;
+    this.dataSource.data = this.filteredResult;
+  }
+
+  filterDataByValue(key: string, filterOne: any, dataArray: any) {
+    const filterResult = [];
+    if (key === undefined || filterOne === 'no-selected') {
+      if (filterOne === 'no-selected') {
+        this.filterForm.patchValue({
+          status: ''
+        });
+      }
+      return dataArray;
+    }
+    for (let eachData of dataArray) {
+      if (key === 'createdAt') {
+        const datetime = new Date(eachData.tweet_created_at);
+        datetime.setHours(datetime.getHours() + 9);
+        const dataDate = this.datePipe.transform(datetime, 'MM/dd/yyyy');
+        const dataFilterDate = this.datePipe.transform(filterOne, 'MM/dd/yyyy');
+        if (dataDate === dataFilterDate) {
+          filterResult.push(eachData);
+        }
+      } else if (key === 'keyword') {
+        if (eachData.keyword.toLowerCase().indexOf(filterOne.toLowerCase()) > -1) {
+          filterResult.push(eachData);
+        }
+      } else if (key === 'tweetId') {
+        if (eachData.tweet_id_str.toLowerCase().indexOf(filterOne.toLowerCase()) > -1) {
+          filterResult.push(eachData);
+        }
+      } else if (key === 'userName') {
+        if (eachData.user_name.toLowerCase().indexOf(filterOne.toLowerCase()) > -1) {
+          filterResult.push(eachData);
+        }
+      } else if (key === 'userScreenName') {
+        if (eachData.user_screen_name.toLowerCase().indexOf(filterOne.toLowerCase()) > -1) {
+          filterResult.push(eachData);
+        }
+      } else if (key === 'originalText') {
+        if (eachData.original_text.toLowerCase().indexOf(filterOne.toLowerCase()) > -1) {
+          filterResult.push(eachData);
+        }
+      } else if (key === 'followerCount') {
+        if (Number(eachData.followers_count) >= Number(filterOne)) {
+          filterResult.push(eachData);
+        }
+      }
+    }
+    return filterResult
+  }
+
   getUsers() {
     new Promise(accept => this.dashboardservice.getUsers().subscribe((data) => {
       this.users = data.users
-      this.dataSource.data = this.users;
+      this.filteredResult = data.users;
+      this.dataSource.data = this.filteredResult;
     }, accept));
   }
 }
