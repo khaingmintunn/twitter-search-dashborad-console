@@ -19,7 +19,7 @@
           <button type="submit" mat-raised-button type="submit" color="primary" style="margin-left: 1rem;" [disabled]="!hashTagForm.valid">Search</button>
         <!-- </mat-form-field> -->
         <!-- <mat-form-field> -->
-          <button (click)="saveUser()" mat-raised-button color="primary" style="margin-left: 1rem;" [disabled]="selectedItems.length == 0">Save</button>
+          <button (click)="saveUser()" mat-raised-button color="primary" style="margin-left: 1rem;" [disabled]="!isCheckItem()">Save</button>
         <!-- </mat-form-field> -->
         <span class="message">{{message}}</span>
         <span class="route-user" routerLink="/user">Goto Tweet List</span>

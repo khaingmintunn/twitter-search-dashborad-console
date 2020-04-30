@@ -55,6 +55,12 @@
     </div>
     <!-- filters form -->
 
+    <!-- Retwit -->
+    <button mat-raised-button class="retweet-content-btn" (click)="replyMessage()" [disabled]="!isCheckItem()">Reply</button>
+    <!-- Retwit -->
+
+    <span class="message">{{message}}</span>
+
     <!-- <mat-paginator #paginator [pageSize]="pageSize" [pageSizeOptions]="[10, 20, 50, 100]" [showFirstLastButtons]="true"
       [length]="totalSize" [pageIndex]="currentPage" (page)="handlePage($event)"
       >
@@ -62,6 +68,16 @@
 
     <!-- user list data -->
     <table mat-table [dataSource]="dataSource" (matSortChange)="sortDataByMatHeader($event)" matSort class="tweet-list-table">
+      <!-- check Column -->
+      <ng-container matColumnDef="isReply">
+        <th *matHeaderCellDef>&emsp;</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-checkbox [(ngModel)]="element.is_check"
+            (change)="selectedItem(element)"></mat-checkbox>
+        </td>
+      </ng-container>
+      <!-- check Column -->
+
       <!-- keyword Column -->
       <ng-container matColumnDef="keyword">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Keyword </th>

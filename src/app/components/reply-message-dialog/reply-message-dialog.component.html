@@ -1,0 +1,26 @@
+<div class="edit-fixed-txt-msg-dialog-container">
+  <div mat-dialog-title>
+    Tweet Reply
+  </div>
+  <form name="messageForm" #messageForm="ngForm">
+    <div mat-dialog-content>
+      <p>Set a fixed sentence to be added to the ending of the reply sentence</p>
+
+      <mat-card class="msg-dialog-content">
+        <div class="container">
+          <div class="backdrop">
+            <div class="highlights"></div>
+          </div>
+          <textarea [value]="messageText" (input)="onTweetCompose()" (scroll)="handleScroll()"></textarea>
+        </div>
+      </mat-card>
+      <label class="msg-remaining-length"> 残り {{ maxChars - messageText.length }}文字</label>
+    </div>
+    <div mat-dialog-actions class="action-btn-container">
+      <div class="action-row" layout="row" layout-align="start center">
+        <button [mat-dialog-close]="messageText" mat-raised-button color="primary" class="send-btn"
+          [disabled]="messageForm.invalid || isDisabledSndBtn">Reply</button>
+      </div>
+    </div>
+  </form>
+</div>

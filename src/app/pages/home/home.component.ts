@@ -69,6 +69,13 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  isCheckItem() {
+    const selected = this.selectedItems.filter(item=> {
+      return item.is_saved === true
+    })
+    return selected.length > 0 ? true: false;
+  }
+
   isSelected(id) {
     if (this.selectedItems.find(a => a.tweet_id_str === id)) return true;
     else false;

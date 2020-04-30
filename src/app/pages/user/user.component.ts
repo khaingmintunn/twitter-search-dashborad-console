@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../../service/dashboard.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
 import { Sort } from '@angular/material/sort';
 import { DatePipe } from '@angular/common';
 import { FormGroup, FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
+import { ReplyMessageDialogComponent } from '../../components/reply-message-dialog/reply-message-dialog.component'
 declare var require: any;
 
 @Component({
@@ -17,6 +18,7 @@ declare var require: any;
 })
 export class UserComponent implements OnInit {
   users = []
+  message: '';
   sortDirection = '';
   sortActive = '';
   inputChangeStatus = false;
@@ -24,9 +26,10 @@ export class UserComponent implements OnInit {
   showGeneratedText = [];
   tempEditGeneratedText;
   retData: any;
-  filteredResult: []
+  filteredResult: [];
+  selectedItems: object[] = [];
   public dataSource = new MatTableDataSource<Element>();
-  displayedColumns: string[] = ['keyword', 'tweetId', 'userName', 'userScreenName', 'originalText', 'followerCount', 'createdAt'];
+  displayedColumns: string[] = ['isReply', 'keyword', 'tweetId', 'userName', 'userScreenName', 'originalText', 'followerCount', 'createdAt'];
 
   filterForm = new FormGroup({
     keyword: new FormControl(''),
@@ -40,6 +43,7 @@ export class UserComponent implements OnInit {
   constructor(
     private dashboardservice: DashboardService,
     private datePipe: DatePipe,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -198,9 +202,55 @@ export class UserComponent implements OnInit {
 
   getUsers() {
     new Promise(accept => this.dashboardservice.getUsers().subscribe((data) => {
+      data.users.map(user => {
+        user.is_check = false
+      })
       this.users = data.users
       this.filteredResult = data.users;
       this.dataSource.data = this.filteredResult;
     }, accept));
+  }
+
+  selectedItem(item) {
+    if (item.is_check) {
+      this.selectedItems.push(item)
+    }
+  }
+
+  isCheckItem() {
+    const selected = this.selectedItems.filter(item => {
+      return item.is_check === true
+    })
+    return selected.length > 0 ? true : false;
+  }
+
+  replyMessage() {
+    const selected = this.selectedItems.filter(item => {
+      return item.is_check === true
+    })
+    const submitMsgDialogRef = this.dialog.open(ReplyMessageDialogComponent, {
+      width: '500px',
+      panelClass: 'submit-msg-overlay-pane',
+      autoFocus: false,
+      data: selected
+    });
+    submitMsgDialogRef.afterClosed().subscribe(data => {
+      if (data) {
+        const replyParams = {
+          text: data,
+          tweets: selected
+        }
+        this.dashboardservice.replyTweet(replyParams).subscribe(data => {
+          this.message = 'Tweet reply successfully.';
+          this.selectedItems = []
+          selected.map(item => {
+            item.is_check = false
+          })
+        })
+        setTimeout(() => {
+          this.message = ''
+        }, 5000)
+      }
+    });
   }
 }

@@ -39,3 +39,22 @@ th {
 .filter-field {
   margin-right: 5px;
 }
+
+.retweet-content-btn {
+  padding-left: 30px;
+  padding-right: 30px;
+  float: right;
+  margin: 10px 15px;
+  background-color: #248133;
+  color: #fff;
+}
+
+.message {
+  padding-left: 10px;
+  padding-right: 10px;
+  float: right;
+  margin: 10px 15px;
+  color: #096;
+  font-size: 14px;
+  font-weight: bold;
+}

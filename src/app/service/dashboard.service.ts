@@ -35,6 +35,10 @@ export class DashboardService {
     return this.http.delete(this.endpoint + 'tag', { params: { hashtag } });
   }
 
+  replyTweet(reply): Observable<any> {
+    return this.http.post(this.endpoint + 'reply', reply);
+  }
+
   async isLoggedIn() {
     if (localStorage.getItem('user')) {
       await this.authUserSubject.next(localStorage.getItem('user'));

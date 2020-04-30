@@ -12,7 +12,8 @@ import { AngularMaterialImportsModule } from './angular-material-imports.module'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserComponent } from './pages/user/user.component'
-import { CustomPaginator } from '../app/paginator/custom-paginator'
+import { CustomPaginator } from '../app/paginator/custom-paginator';
+import { ReplyMessageDialogComponent } from '../app/components/reply-message-dialog/reply-message-dialog.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CustomPaginator } from '../app/paginator/custom-paginator'
     HomeComponent,
     RoutingComponent,
     LoginComponent,
-    UserComponent
+    UserComponent,
+    ReplyMessageDialogComponent
   ],
   imports: [
     BrowserModule,
