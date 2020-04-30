@@ -18,7 +18,7 @@ declare var require: any;
 })
 export class UserComponent implements OnInit {
   users = []
-  message: '';
+  message = '';
   sortDirection = '';
   sortActive = '';
   inputChangeStatus = false;
@@ -27,7 +27,7 @@ export class UserComponent implements OnInit {
   tempEditGeneratedText;
   retData: any;
   filteredResult: [];
-  selectedItems: object[] = [];
+  selectedItems = [];
   public dataSource = new MatTableDataSource<Element>();
   displayedColumns: string[] = ['isReply', 'keyword', 'tweetId', 'userName', 'userScreenName', 'originalText', 'followerCount', 'createdAt'];
 
